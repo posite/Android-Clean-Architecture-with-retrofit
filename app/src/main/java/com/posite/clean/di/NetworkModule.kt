@@ -2,6 +2,7 @@ package com.posite.clean.di
 
 import com.posite.clean.CleanApplication
 import com.posite.clean.R
+import com.posite.clean.data.service.TestService
 import com.posite.clean.util.HttpRequestInterceptor
 import dagger.Module
 import dagger.Provides
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 object NetworkModule {
     const val NETWORK_EXCEPTION_OFFLINE_CASE = "network status is offline"
     const val NETWORK_EXCEPTION_BODY_IS_NULL = "result body is null"
-
+    
     @Provides
     @Singleton
     fun provideOKHttpClient(): OkHttpClient {
@@ -37,13 +38,12 @@ object NetworkModule {
             .build()
     }
 
-    /*
+
     @Provides
     @Singleton
-    fun provideAuthApi(retrofit: Retrofit): AuthApi {
+    fun provideTestService(retrofit: Retrofit): TestService {
         return retrofit.buildService()
     }
-    */
 
 
     private inline fun <reified T> Retrofit.buildService(): T {
