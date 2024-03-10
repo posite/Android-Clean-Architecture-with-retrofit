@@ -8,8 +8,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.posite.clean.R
 import com.posite.clean.databinding.ActivityMainBinding
 import com.posite.clean.presentation.base.BaseActivity
+import com.posite.clean.presentation.ui.detail.UserInfoActivity
 import com.posite.clean.presentation.ui.main.adapter.UserListAdapter
-import com.posite.clean.presentation.ui.single.UserInfoActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

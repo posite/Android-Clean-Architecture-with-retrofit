@@ -1,4 +1,4 @@
-package com.posite.clean.presentation.ui.single
+package com.posite.clean.presentation.ui.detail
 
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle

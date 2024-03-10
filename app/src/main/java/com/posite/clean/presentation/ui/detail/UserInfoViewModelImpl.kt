@@ -1,4 +1,4 @@
-package com.posite.clean.presentation.ui.single
+package com.posite.clean.presentation.ui.detail
 
 import androidx.lifecycle.viewModelScope
 import com.posite.clean.data.dto.user_list.UserDto

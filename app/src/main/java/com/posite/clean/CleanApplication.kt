@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.kakao.sdk.common.KakaoSdk
 import com.posite.clean.util.NetworkChecker
 import dagger.hilt.android.HiltAndroidApp
 
@@ -15,6 +16,7 @@ class CleanApplication : Application(), DefaultLifecycleObserver {
         super<Application>.onCreate()
         context = applicationContext
         networkConnectionChecker = NetworkChecker(context)
+        KakaoSdk.init(this, getString(R.string.kakao_app_key))
     }
 
     override fun onStop(owner: LifecycleOwner) {

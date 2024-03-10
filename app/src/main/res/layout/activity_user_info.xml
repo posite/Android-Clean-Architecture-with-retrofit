@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.posite.clean.presentation.ui.single.UserInfoViewModel" />
+            type="com.posite.clean.presentation.ui.detail.UserInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
