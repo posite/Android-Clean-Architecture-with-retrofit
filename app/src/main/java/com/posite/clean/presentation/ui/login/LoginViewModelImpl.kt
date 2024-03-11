@@ -39,8 +39,9 @@ class LoginViewModelImpl @Inject constructor(
     override fun checkAutoLogin() {
         viewModelScope.launch {
             val access = dataStoreUtil.fetchAccessToken()
+            Log.d("accesslogin", access)
             val refresh = dataStoreUtil.fetchRefreshToken()
-            if(access.isNotBlank() && refresh.isNotBlank()) {
+            if (access.isNotBlank() && refresh.isNotBlank()) {
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
                         Log.e("kakao", "사용자 정보 요청 실패", error)
