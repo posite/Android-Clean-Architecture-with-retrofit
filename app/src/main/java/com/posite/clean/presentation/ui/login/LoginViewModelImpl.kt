@@ -38,9 +38,9 @@ class LoginViewModelImpl @Inject constructor(
 
     override fun checkAutoLogin() {
         viewModelScope.launch {
-            val access = dataStoreUtil.fetchAccessToken()
+            val access = dataStoreUtil.loadAccessToken()
             Log.d("accesslogin", access)
-            val refresh = dataStoreUtil.fetchRefreshToken()
+            val refresh = dataStoreUtil.loadRefreshToken()
             if (access.isNotBlank() && refresh.isNotBlank()) {
                 UserApiClient.instance.me { user, error ->
                     if (error != null) {
@@ -83,9 +83,16 @@ class LoginViewModelImpl @Inject constructor(
                                     user.kakaoAccount?.profile?.thumbnailImageUrl!!
                                 )
                             )
+                            Log.d(
+                                "real",
+                                "access: ${token.accessToken}, refresh: ${token.refreshToken}"
+                            )
                             dataStoreUtil.saveRefreshToken(token.refreshToken)
                             dataStoreUtil.saveAccessToken(token.accessToken)
-
+                            Log.d(
+                                "now",
+                                "access: ${dataStoreUtil.loadAccessToken()}, refresh: ${dataStoreUtil.loadRefreshToken()}"
+                            )
                             //연결 끊기 : 앱과 카카오 연결 끊기(성공 시 로그아웃 처리도 됨)
                             /*
                             UserApiClient.instance.unlink { error ->

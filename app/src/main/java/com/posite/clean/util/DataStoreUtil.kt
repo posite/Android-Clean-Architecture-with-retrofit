@@ -21,7 +21,7 @@ class DataStoreUtil @Inject constructor(private val context: Context) {
         }
     }
 
-    suspend fun fetchAccessToken(): String {
+    suspend fun loadAccessToken(): String {
         val preferences = context.dataStore.data.first()
         val encrypted = preferences[ACCESS_TOKEN_KEY] ?: return ""
         Log.d("token fetch", encrypted)
@@ -37,7 +37,7 @@ class DataStoreUtil @Inject constructor(private val context: Context) {
         }
     }
 
-    suspend fun fetchRefreshToken(): String {
+    suspend fun loadRefreshToken(): String {
         val preferences = context.dataStore.data.first()
         val encrypted = preferences[REFRESH_TOKEN_KEY] ?: return ""
         Log.d("refresh fetch", encrypted)

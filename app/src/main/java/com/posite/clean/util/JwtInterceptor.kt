@@ -13,7 +13,7 @@ class JwtInterceptor @Inject constructor(@ApplicationContext private val ds: Dat
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
         Log.d("accessToken", "토큰 뽑기 전")
-        val token: String = runBlocking { ds.fetchAccessToken() }
+        val token: String = runBlocking { ds.loadAccessToken() }
         Log.d("accessToken", token)
 
         token.let {

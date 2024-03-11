@@ -35,8 +35,7 @@ object DataEncryptUtil {
         )
             .setBlockModes(BLOCK_MODE)
             .setEncryptionPaddings(PADDING)
-            .setUserAuthenticationRequired(false)
-            .setRandomizedEncryptionRequired(true)
+            .setKeySize(256)
             .build()
         keyGenerator.init(keySpec)
         return keyGenerator.generateKey()
@@ -56,6 +55,6 @@ object DataEncryptUtil {
         val spec = GCMParameterSpec(TAG_LENGTH, iv)
         cipher.init(Cipher.DECRYPT_MODE, secretKey, spec)
         val decryptedData = cipher.doFinal(encryptedData)
-        return decryptedData.toString()
+        return String(decryptedData)
     }
 }
