@@ -36,6 +36,31 @@ class LoginViewModelImpl @Inject constructor(
     override val goMain: StateFlow<Boolean>
         get() = _goMain
 
+    override fun checkAutoLogin() {
+        viewModelScope.launch {
+            val access = dataStoreUtil.fetchAccessToken()
+            val refresh = dataStoreUtil.fetchRefreshToken()
+            if(access.isNotBlank() && refresh.isNotBlank()) {
+                UserApiClient.instance.me { user, error ->
+                    if (error != null) {
+                        Log.e("kakao", "사용자 정보 요청 실패", error)
+                    } else if (user != null) {
+                        viewModelScope.launch {
+                            Log.d("kakao", "id: ${user.id}, email: ${user.kakaoAccount?.email}")
+                            _kakaoInfo.emit(
+                                KakaoInfo(
+                                    user.kakaoAccount?.profile?.nickname!!,
+                                    user.kakaoAccount?.profile?.thumbnailImageUrl!!
+                                )
+                            )
+                        }
+                        _kakaoLoginFinished.value = true
+                    }
+                }
+            }
+        }
+    }
+
     override fun onKakaoClick() {
         viewModelScope.launch {
             _kakaoEvent.emit(_kakaoEvent.value.not())
@@ -61,6 +86,7 @@ class LoginViewModelImpl @Inject constructor(
                             dataStoreUtil.saveAccessToken(token.accessToken)
 
                             //연결 끊기 : 앱과 카카오 연결 끊기(성공 시 로그아웃 처리도 됨)
+                            /*
                             UserApiClient.instance.unlink { error ->
                                 if (error != null) {
                                     Log.e("kakao", "연결 끊기 실패", error)
@@ -68,6 +94,7 @@ class LoginViewModelImpl @Inject constructor(
                                     Log.i("kakao", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
                                 }
                             }
+                            */
                         }
                         _kakaoLoginFinished.value = true
                     }

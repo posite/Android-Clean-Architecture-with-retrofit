@@ -10,6 +10,7 @@ interface LoginViewModel {
     val kakaoLoginFinished: StateFlow<Boolean>
     val goMain: StateFlow<Boolean>
 
+    fun checkAutoLogin()
     fun onKakaoClick()
 
     fun getKakaoToken(context: Context)

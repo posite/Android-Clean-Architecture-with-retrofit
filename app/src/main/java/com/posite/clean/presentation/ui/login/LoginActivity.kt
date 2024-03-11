@@ -20,6 +20,8 @@ class LoginActivity :
 
     override fun initView() {
         binding.vm = viewModel
+
+        viewModel.checkAutoLogin()
     }
 
     override fun initObserver() {
@@ -48,6 +50,7 @@ class LoginActivity :
                     if (it) {
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                 }
             }
