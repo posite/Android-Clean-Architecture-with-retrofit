@@ -36,18 +36,31 @@
             app:layout_constraintTop_toBottomOf="@id/profile_img" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/buttonOAuthLoginImg"
-            android:src="@drawable/naver_long"
+            android:id="@+id/google_button"
             android:layout_width="180dp"
             android:layout_height="50dp"
-            android:scaleType="fitXY"
-            android:background="@android:color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{()->vm.onNaverClick()}"
-            android:visibility="@{vm.loginFinished == true ?View.GONE : View.VISIBLE}"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@id/kakao_btn" />
+            android:background="@android:color/transparent"
+            android:src="@drawable/android_light_sq_si"
+            android:onClick="@{()->vm.onGoogleClick()}"
+            android:visibility="@{vm.loginFinished == true ?View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/naver_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/naver_btn"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:color/transparent"
+            android:onClick="@{()->vm.onNaverClick()}"
+            android:scaleType="fitXY"
+            android:src="@drawable/naver_long"
+            android:visibility="@{vm.loginFinished == true ?View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/kakao_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/kakao_btn"

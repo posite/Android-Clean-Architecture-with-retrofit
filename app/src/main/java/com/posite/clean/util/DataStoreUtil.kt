@@ -45,9 +45,33 @@ class DataStoreUtil @Inject constructor(private val context: Context) {
         return DataEncryptUtil.decrypt(iv, encryptedData)
     }
 
+    suspend fun saveUserNickName(nickname: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_NICKNAME_KEY] = nickname
+        }
+    }
+
+    suspend fun loadUserNickName(): String {
+        val preferences = context.dataStore.data.first()
+        return preferences[USER_NICKNAME_KEY] ?: return ""
+    }
+
+    suspend fun saveUserProfile(profile: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_PROFILE_KEY] = profile
+        }
+    }
+
+    suspend fun loadUserProfile(): String {
+        val preferences = context.dataStore.data.first()
+        return preferences[USER_PROFILE_KEY] ?: return ""
+    }
+
     companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
+        private val USER_NICKNAME_KEY = stringPreferencesKey("user_nickname")
+        private val USER_PROFILE_KEY = stringPreferencesKey("user_profile")
     }
 
     private fun ByteArray.toBase64(): String =

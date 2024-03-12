@@ -42,6 +42,10 @@ class LoginViewModelImpl @Inject constructor(
     override val naverEvent: StateFlow<Boolean>
         get() = _naverEvent
 
+    private val _googleEvent: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    override val googleEvent: StateFlow<Boolean>
+        get() = _googleEvent
+
 
     private val _goMain: MutableStateFlow<Boolean> = MutableStateFlow(false)
     override val goMain: StateFlow<Boolean>
@@ -49,33 +53,42 @@ class LoginViewModelImpl @Inject constructor(
 
     override fun checkAutoLogin() {
         viewModelScope.launch {
-            val access = dataStoreUtil.loadAccessToken()
-            Log.d("accesslogin", access)
-            val refresh = dataStoreUtil.loadRefreshToken()
-            if (access.isNotBlank() && refresh.isNotBlank()) {
-                UserApiClient.instance.me { user, error ->
-                    if (error != null) {
-                        Log.e("kakao", "사용자 정보 요청 실패", error)
-                        viewModelScope.launch {
-                            useCase.invoke().collect { result ->
-                                result.onSuccess {
-                                    _oauthInfo.emit(UserInfo(it.nickname, it.profile))
-                                    _loginFinished.value = true
-                                }
-                            }
-                        }
-                    } else if (user != null) {
-                        viewModelScope.launch {
-                            Log.d("kakao", "id: ${user.id}, email: ${user.kakaoAccount?.email}")
-                            _oauthInfo.emit(
-                                UserInfo(
-                                    user.kakaoAccount?.profile?.nickname!!,
-                                    user.kakaoAccount?.profile?.thumbnailImageUrl!!
-                                )
-                            )
-                        }
-                        _loginFinished.value = true
-                    }
+//            val access = dataStoreUtil.loadAccessToken()
+//            Log.d("accesslogin", access)
+//            val refresh = dataStoreUtil.loadRefreshToken()
+//            if (access.isNotBlank() && refresh.isNotBlank()) {
+//                UserApiClient.instance.me { user, error ->
+//                    if (error != null) {
+//                        Log.e("kakao", "사용자 정보 요청 실패", error)
+//                        viewModelScope.launch {
+//                            useCase.invoke().collect { result ->
+//                                result.onSuccess {
+//                                    _oauthInfo.emit(UserInfo(it.nickname, it.profile))
+//                                    _loginFinished.value = true
+//                                }
+//                            }
+//                        }
+//                    } else if (user != null) {
+//                        viewModelScope.launch {
+//                            Log.d("kakao", "id: ${user.id}, email: ${user.kakaoAccount?.email}")
+//                            _oauthInfo.emit(
+//                                UserInfo(
+//                                    user.kakaoAccount?.profile?.nickname!!,
+//                                    user.kakaoAccount?.profile?.thumbnailImageUrl!!
+//                                )
+//                            )
+//                        }
+//                        _loginFinished.value = true
+//                    }
+//                }
+//            }
+            val nickname = dataStoreUtil.loadUserNickName()
+            val profile = dataStoreUtil.loadUserProfile()
+            Log.d("nickname", nickname)
+            if (nickname.isNotBlank()) {
+                viewModelScope.launch {
+                    _oauthInfo.emit(UserInfo(nickname, profile))
+                    _loginFinished.value = true
                 }
             }
         }
@@ -108,6 +121,8 @@ class LoginViewModelImpl @Inject constructor(
                             )
                             dataStoreUtil.saveRefreshToken(token.refreshToken)
                             dataStoreUtil.saveAccessToken(token.accessToken)
+                            dataStoreUtil.saveUserNickName(user.kakaoAccount?.profile?.nickname!!)
+                            dataStoreUtil.saveUserProfile(user.kakaoAccount?.profile?.thumbnailImageUrl!!)
                             Log.d(
                                 "now",
                                 "access: ${dataStoreUtil.loadAccessToken()}, refresh: ${dataStoreUtil.loadRefreshToken()}"
@@ -147,6 +162,8 @@ class LoginViewModelImpl @Inject constructor(
                     useCase.invoke().collect { result ->
                         result.onSuccess {
                             _oauthInfo.emit(it)
+                            dataStoreUtil.saveUserNickName(it.nickname)
+                            dataStoreUtil.saveUserProfile(it.profile)
                         }.onError {
                             Log.d("naver", it.toString())
                         }
@@ -172,6 +189,25 @@ class LoginViewModelImpl @Inject constructor(
 
 
         NaverIdLoginSDK.authenticate(context, oauthLoginCallback)
+    }
+
+    override fun onGoogleClick() {
+        viewModelScope.launch {
+            _googleEvent.emit(true)
+        }
+    }
+
+    override fun onGoogleLoginSuccess(nickname: String, profile: String) {
+        Log.d("nickname", nickname)
+        viewModelScope.launch {
+            dataStoreUtil.saveUserNickName(nickname)
+            dataStoreUtil.saveUserProfile(profile)
+            _loginFinished.emit(true)
+        }
+    }
+
+    override fun onLoginFinished() {
+        _loginFinished.value = true
     }
 
     override fun goMainClick() {

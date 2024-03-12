@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface LoginViewModel {
     val kakaoEvent: StateFlow<Boolean>
     val naverEvent: StateFlow<Boolean>
+    val googleEvent: StateFlow<Boolean>
     val userInfo: StateFlow<UserInfo>
     val loginFinished: StateFlow<Boolean>
 
@@ -19,5 +20,8 @@ interface LoginViewModel {
     fun onNaverClick()
     fun getNaverToken(context: Context)
 
+    fun onGoogleClick()
+    fun onGoogleLoginSuccess(nickname: String, profile: String)
+    fun onLoginFinished()
     fun goMainClick()
 }
