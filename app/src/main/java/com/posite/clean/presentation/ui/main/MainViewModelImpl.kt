@@ -1,8 +1,8 @@
 package com.posite.clean.presentation.ui.main
 
 import androidx.lifecycle.viewModelScope
-import com.posite.clean.domain.model.UserList
-import com.posite.clean.domain.usecase.GetAllUserInfoUseCase
+import com.posite.clean.domain.model.test.UserList
+import com.posite.clean.domain.usecase.test.GetAllUserInfoUseCase
 import com.posite.clean.presentation.base.BaseViewModel
 import com.posite.clean.util.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel

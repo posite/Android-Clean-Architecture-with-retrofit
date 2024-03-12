@@ -1,4 +1,4 @@
-package com.posite.clean.data.service
+package com.posite.clean.data.service.test
 
 import com.posite.clean.data.dto.user_info.UserInfoResponseDto
 import com.posite.clean.data.dto.user_list.UserListResponseDto

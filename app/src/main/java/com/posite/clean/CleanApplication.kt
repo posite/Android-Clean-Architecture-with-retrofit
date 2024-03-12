@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.kakao.sdk.common.KakaoSdk
+import com.navercorp.nid.NaverIdLoginSDK
 import com.posite.clean.util.NetworkChecker
 import dagger.hilt.android.HiltAndroidApp
 
@@ -17,6 +18,12 @@ class CleanApplication : Application(), DefaultLifecycleObserver {
         context = applicationContext
         networkConnectionChecker = NetworkChecker(context)
         KakaoSdk.init(this, getString(R.string.kakao_app_key))
+        NaverIdLoginSDK.initialize(
+            context,
+            getString(R.string.naver_client_id),
+            getString(R.string.naver_client_secret),
+            "Clean"
+        )
     }
 
     override fun onStop(owner: LifecycleOwner) {

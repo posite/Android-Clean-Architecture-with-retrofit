@@ -30,21 +30,35 @@
             android:id="@+id/user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/profile_img"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_img" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/buttonOAuthLoginImg"
+            android:src="@drawable/naver_long"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{()->vm.onNaverClick()}"
+            android:visibility="@{vm.loginFinished == true ?View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@id/kakao_btn" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/kakao_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:background="@android:color/transparent"
             android:layout_marginBottom="24dp"
+            android:background="@android:color/transparent"
             android:onClick="@{()->vm.onKakaoClick()}"
-            android:visibility="@{vm.kakaoLoginFinished == true ?View.GONE : View.VISIBLE}"
             android:src="@drawable/kakao_login_medium_narrow"
+            android:visibility="@{vm.loginFinished == true ?View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -54,11 +68,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:background="@android:color/transparent"
             android:layout_marginBottom="24dp"
-            android:text="go main"
+            android:background="@android:color/transparent"
             android:onClick="@{()->vm.goMainClick()}"
-            android:visibility="@{vm.kakaoLoginFinished == false ?View.GONE : View.VISIBLE}"
+            android:text="go main"
+            android:visibility="@{vm.loginFinished == false ?View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

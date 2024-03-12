@@ -1,6 +1,6 @@
 package com.posite.clean.data.dto.user_list
 
-import com.posite.clean.domain.model.UserList
+import com.posite.clean.domain.model.test.UserList
 
 data class UserListResponseDto(
     val `data`: List<UserDto>,

@@ -37,7 +37,7 @@ class LoginActivity :
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.kakaoInfo.collect {
+                viewModel.userInfo.collect {
                     binding.userId.text = it.nickname
                     Glide.with(this@LoginActivity).load(it.profile).into(binding.profileImg)
                 }
@@ -51,6 +51,16 @@ class LoginActivity :
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                         finish()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.naverEvent.collect {
+                    if (it) {
+                        viewModel.getNaverToken(this@LoginActivity)
                     }
                 }
             }

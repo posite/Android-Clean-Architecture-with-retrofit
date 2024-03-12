@@ -1,4 +1,4 @@
-package com.posite.clean.domain.model
+package com.posite.clean.domain.model.test
 
 import com.posite.clean.data.dto.user_list.UserDto
 

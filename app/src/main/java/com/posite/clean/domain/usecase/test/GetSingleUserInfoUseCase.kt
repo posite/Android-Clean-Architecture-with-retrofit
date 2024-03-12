@@ -1,7 +1,7 @@
-package com.posite.clean.domain.usecase
+package com.posite.clean.domain.usecase.test
 
 import com.posite.clean.data.dto.user_list.UserDto
-import com.posite.clean.domain.repository.UserInfoRepository
+import com.posite.clean.domain.repository.test.UserInfoRepository
 import com.posite.clean.util.DataResult
 import com.posite.clean.util.onError
 import com.posite.clean.util.onSuccess
@@ -12,7 +12,7 @@ class GetSingleUserInfoUseCase @Inject constructor(private val repository: UserI
     suspend operator fun invoke(id: Long) = flow<DataResult<UserDto>> {
         try {
             emit(repository.getSingleUserInfo(id).onSuccess {
-                
+
             }.onError {
 
             })

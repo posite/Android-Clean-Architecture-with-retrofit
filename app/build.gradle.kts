@@ -90,6 +90,9 @@ dependencies {
     //kakao
     implementation("com.kakao.sdk:v2-user:2.20.0")
 
+    //naver
+    implementation("com.navercorp.nid:oauth:5.9.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
