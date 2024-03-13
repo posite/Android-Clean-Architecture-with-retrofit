@@ -85,6 +85,7 @@ class LoginViewModelImpl @Inject constructor(
             val nickname = dataStoreUtil.loadUserNickName()
             val profile = dataStoreUtil.loadUserProfile()
             Log.d("nickname", nickname)
+            Log.d("auto profile", profile)
             if (nickname.isNotBlank()) {
                 viewModelScope.launch {
                     _oauthInfo.emit(UserInfo(nickname, profile))

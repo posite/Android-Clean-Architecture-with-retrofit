@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -94,6 +95,12 @@ dependencies {
     implementation("com.navercorp.nid:oauth:5.9.0")
 
     //google
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
     testImplementation("junit:junit:4.13.2")
