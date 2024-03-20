@@ -20,7 +20,7 @@ class UserInfoViewModelImpl @Inject constructor(private val getSingleUserInfoUse
 
     override fun getSingeUserInfo(id: Long) {
         viewModelScope.launch {
-            getSingleUserInfoUseCase.invoke(id).collect { result ->
+            getSingleUserInfoUseCase(id).collect { result ->
                 result.onSuccess {
                     _userData.emit(it)
                 }

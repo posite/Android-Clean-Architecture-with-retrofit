@@ -21,7 +21,7 @@ class MainViewModelImpl @Inject constructor(
 
     override fun getUserList(page: Long) {
         viewModelScope.launch {
-            getAllUserInfoUseCase.invoke(page).collect { result ->
+            getAllUserInfoUseCase(page).collect { result ->
                 result.onSuccess {
                     _userList.emit(it)
                 }

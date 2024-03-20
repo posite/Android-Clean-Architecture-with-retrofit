@@ -160,7 +160,7 @@ class LoginViewModelImpl @Inject constructor(
                 viewModelScope.launch {
                     dataStoreUtil.saveAccessToken(NaverIdLoginSDK.getAccessToken()!!)
                     dataStoreUtil.saveRefreshToken(NaverIdLoginSDK.getRefreshToken()!!)
-                    useCase.invoke().collect { result ->
+                    useCase().collect { result ->
                         result.onSuccess {
                             _oauthInfo.emit(it)
                             dataStoreUtil.saveUserNickName(it.nickname)
