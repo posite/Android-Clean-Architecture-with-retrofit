@@ -1,8 +1,7 @@
 package com.posite.clean.di
 
 import com.posite.clean.data.datasource.naver.NaverUserInfoDataSource
-import com.posite.clean.data.datasource.test.TestUserInfoDataSource
-import com.posite.clean.data.datasource.test.TestUserListDataSource
+import com.posite.clean.data.datasource.test.TestDataSource
 import com.posite.clean.data.repository.naver.NaverUserInfoRepositoryImpl
 import com.posite.clean.data.repository.test.UserInfoRepositoryImpl
 import com.posite.clean.domain.repository.naver.NaverUserInfoRepository
@@ -23,11 +22,9 @@ object RepositoryModule {
     @Provides
     @ViewModelScoped
     fun provideUserInfoRepository(
-        userInfoDataSource: TestUserInfoDataSource,
-        userListDataSource: TestUserListDataSource
+        userInfoDataSource: TestDataSource
     ): UserInfoRepository =
         UserInfoRepositoryImpl(
-            userListDataSource,
             userInfoDataSource,
             TestUserListMapperUtil(),
             TestUserInfoMapperUtil()
